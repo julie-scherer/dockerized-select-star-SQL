@@ -1,0 +1,4 @@
+_*
+.env
+venv
+postgres-data
