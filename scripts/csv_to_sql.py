@@ -10,7 +10,7 @@ load_dotenv()
 # Import SQLalchemy to connect to postgres db (https://docs.sqlalchemy.org/en/14/core/connections.html)
 from sqlalchemy import create_engine
 
-# Loading CSV file, converting data to pandas df, and exporting df to SQL db
+# Load CSV file, convert to pandas df, and export to SQL db
 def csv_to_sql(csv_path):
     # Read CSV
     df = pd.read_csv(csv_path)

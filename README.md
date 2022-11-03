@@ -1,8 +1,8 @@
-This Docker container uses the data provided in the [Select Start SQL](https://selectstarsql.com) book so you can quickly and easy run the queries as you follow along with the chapters on your local computer. 
+This Docker container uses the data provided in the [Select Start SQL](https://selectstarsql.com) book so you can quickly and easily run the queries as you follow along with the chapters on your local computer. 
 
 ## Setting up the local environment
 
-* Navigate to the directory on your local computer where you plan to store the app
+* Navigate to the directory where you plan to store the repo on your local computer
 
     ```
     mkdir path\to\new_dir
@@ -13,11 +13,11 @@ This Docker container uses the data provided in the [Select Start SQL](https://s
 
     `git clone https://github.com/schererjulie/SelectStarSQL.git`
 
-* Create a `.env` file in the main dir and load global variables (see example below)
+* Create a `.env` file in the main dir and copy over the variables below (modify the values as you'd like)
 
     ```
     POSTGRES_DB=postgres
-    POSTGRES_USER=postgres
+    POSTGRES_USER=admin
     POSTGRES_PASS=postgres
     POSTGRES_HOST=localhost
     POSTGRES_PORT=5432
@@ -29,27 +29,29 @@ This Docker container uses the data provided in the [Select Start SQL](https://s
 
     `docker-compose --env-file .env up -d`
 
-* Run Python script to create deathrow table
+* Run the `csv_to_sql.py` script to create the _deathrow_ table in the postgres db
 
     `python3 scripts/csv_to_sql.py`
 
-* Connect to postgres database from the command line
+* Connect to the database from the command line
 
     `psql postgres`
 
-    _Alternative_ (but note you'll need to use the login credentials from the .env file) <br>
+    _Alternative option_ (but note you'll need to use the login credentials from the .env file) <br>
     ```
     docker-compose exec postgres /bin/bash
     psql --host=localhost --username=admin --dbname=postgres
     ```
 
-* List all tables using the `\dt` meta-command, and **double check the deathrow table was created**
+* List all tables using the `\dt` meta-command to **make sure the deathrow table was created**
 
     `postgres=# \dt`
 
-* Assuming everything's gone as expected, now you can run queries in the command line! Try the statement below. Here's what you should see:
+* Assuming everything's gone as expected, now you can run SQL queries in the command line! Try the statement below. 
 
-    `SELECT "index", "Execution", "Date of Offence", "Last Name", "Age at Execution" FROM deathrow LIMIT 5` <br>    
+    `SELECT "index", "Execution", "Date of Offence", "Last Name", "Age at Execution" FROM deathrow LIMIT 5`
+
+    Here's what you should see:
 
     ```
     postgres=# SELECT "index", "Execution", "Date of Offence", "Last Name", "Age at Execution" FROM deathrow LIMIT 5;
