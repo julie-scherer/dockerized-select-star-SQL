@@ -24,7 +24,7 @@ def csv_to_sql(csv_path):
     
     # Convert df to SQL
     with engine.begin() as connection:
-        df.to_sql("deathrow", con=connection, if_exists="replace")
+        df.to_sql("executions", con=connection, if_exists="replace")
     
     print("Ready")
 

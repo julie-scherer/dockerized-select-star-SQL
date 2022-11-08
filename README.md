@@ -11,50 +11,41 @@ This Docker container uses the data provided in the [Select Start SQL](https://s
 
 * Clone/fork the git repo
 
-    `git clone https://github.com/schererjulie/SelectStarSQL.git`
-
-* Create a `.env` file in the main dir and copy over the variables below (modify the values as you'd like)
-
     ```
-    POSTGRES_DB=postgres
-    POSTGRES_USER=admin
-    POSTGRES_PASS=postgres
-    POSTGRES_HOST=localhost
-    POSTGRES_PORT=5432
+    git clone https://github.com/schererjulie/SelectStarSQL.git
     ```
 
 ## Running the Docker container
 
-* To start the docker container, you'll need to execute the compose file with a reference to the .env file 
+* Use the command line to execute the docker compose file
 
-    `docker-compose --env-file .env up -d`
+    ```
+    docker-compose config
+    docker-compose up -d
+    ```
 
-* Run the `csv_to_sql.py` script to create the _deathrow_ table in the postgres db
+* Create the executions table in the postgres db
 
-    `python3 scripts/csv_to_sql.py`
+    ```
+    python3 scripts/csv_to_sql.py
+    ```
 
 * Connect to the database from the command line
 
-    `psql postgres`
-
-    _Alternative option_ (but note you'll need to use the login credentials from the .env file) <br>
     ```
-    docker-compose exec postgres /bin/bash
-    psql --host=localhost --username=admin --dbname=postgres
+    psql postgres
     ```
 
-* List all tables using the `\dt` meta-command to **make sure the deathrow table was created**
+* List all tables using the `\dt` meta-command and **make sure the deathrow table was created**
 
-    `postgres=# \dt`
+    ```
+    postgres=# \dt
+    ```
 
 * Assuming everything's gone as expected, now you can run SQL queries in the command line! Try the statement below. 
 
-    `SELECT "index", "Execution", "Date of Offence", "Last Name", "Age at Execution" FROM deathrow LIMIT 5`
-
-    Here's what you should see:
-
     ```
-    postgres=# SELECT "index", "Execution", "Date of Offence", "Last Name", "Age at Execution" FROM deathrow LIMIT 5;
+    postgres=# SELECT "index", "Execution", "Date of Offence", "Last Name", "Age at Execution" FROM executions LIMIT 5;
     index | Execution | Date of Offence |   Last Name   | Age at Execution 
     -------+-----------+-----------------+---------------+------------------
         0 |       553 | 2004-11-21      | Young         |               34
@@ -73,10 +64,11 @@ This Docker container uses the data provided in the [Select Start SQL](https://s
     postgres=# \q
 
     // list all running containers
-    docker ps
+    docker ps -a
 
-    // stop running container (get the container id from the line above)
-    docker stop <container-id>
+    // stop (and remove) running container
+    docker stop db
+    docker rm db
 
     // (optional) free up space by removing any unused resources
     docker container prune

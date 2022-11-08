@@ -1,16 +1,10 @@
-FROM postgres:10
-COPY ./scripts/init_table.sql /docker-entrypoint-initdb.d/init_table.sql
-
-
 FROM python:3.10
-RUN pip3 install --upgrade pip
-WORKDIR /app
-COPY ./.env ./app/.env
-COPY ./requirements.txt ./app/requirements.txt
-RUN pip3 install -r ./app/requirements.txt
+WORKDIR /app/
+COPY requirements.txt requirements.txt
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
+COPY . .
+CMD ["python3", "./scripts/csv_to_sql.py"]
 
-
-# # COPY ./data ./app/data
-# # COPY ./scripts ./app/scripts
-# # EXPOSE "5000"
-# # CMD ["python3","app/scripts/csv_to_sql.py", "--host", "0.0.0.0", "--port", "5432"]
+# docker build -t star-select .
+# docker run star-select
