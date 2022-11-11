@@ -9,6 +9,7 @@ load_dotenv()
 
 # Import SQLalchemy to connect to postgres db (https://docs.sqlalchemy.org/en/14/core/connections.html)
 from sqlalchemy import create_engine
+import psycopg2
 
 # Load CSV file, convert to pandas df, and export to SQL db
 def csv_to_sql(csv_path):
