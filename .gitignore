@@ -1,4 +1,5 @@
 _*
 .env
+.DS_Store
 venv
 postgres-data

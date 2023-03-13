@@ -15,6 +15,9 @@ This Docker container uses the data provided in the [Select Start SQL](https://s
     git clone https://github.com/schererjulie/SelectStarSQL.git
     ```
 
+* Copy+paste env_temp to `.env` file and add credentials
+
+
 ## Running the Docker container
 
 * Use the command line to execute the docker compose file

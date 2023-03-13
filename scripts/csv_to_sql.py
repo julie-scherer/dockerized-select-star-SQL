@@ -10,11 +10,19 @@ load_dotenv()
 # Import SQLalchemy to connect to postgres db (https://docs.sqlalchemy.org/en/14/core/connections.html)
 from sqlalchemy import create_engine
 import psycopg2
+import re
 
 # Load CSV file, convert to pandas df, and export to SQL db
 def csv_to_sql(csv_path):
     # Read CSV
     df = pd.read_csv(csv_path)
+
+    # Rename columns
+    for col_name in df.columns:
+        df.rename(columns={
+            col_name : col_name.lower().replace(' ','_').replace('\n','_')
+        }, inplace=True)
+    df.columns
     
     # Get the database URI/URL
     db_url = f"postgresql://{os.environ['USER']}:{os.environ['POSTGRES_PASS']}@{os.environ['POSTGRES_HOST']}:{os.environ['POSTGRES_PORT']}/{os.environ['POSTGRES_DB']}"
